@@ -1,0 +1,27 @@
+// (1) 회원가입
+function join(evt) {
+
+    evt.preventDefault();
+
+
+    let data = $("#profileUpdate").serialize();
+
+    console.log(data);
+
+
+    $.ajax({
+        type:"post",
+        url:`/auth/signup`,
+        data: data,
+        contentType:'application/x-www-form-urlencoded; charset=utf-8',
+        dataType:'json'
+    }).done(res=>{
+        console.log(res);
+        alert(res.message);
+        location.href=`/`;
+    }).fail(error=>{
+        console.log(error);
+        //alert(error);
+    });
+
+}
