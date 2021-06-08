@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 
 @RestController
@@ -15,12 +16,25 @@ import org.springframework.web.bind.annotation.RestController;
 public class GlobalExceptionHandler {
 
 
+    /**
+     *  ResponseDto, Script 비교
+     *
+     *  1. 클라이언트  -> Script
+     *  2. Ajax      -> ResponseDto
+     *
+     *
+     * @param e
+     * @return
+     */
+
     // 유효성 에러
     @ExceptionHandler(CustomValidationException.class)
     public ResponseEntity<ResponseDto<?>> validationException(CustomValidationException e) {
 
         return new ResponseEntity<>(new ResponseDto<>(e.getMessage(), e.getErrorMap()), HttpStatus.BAD_REQUEST);
     }
+
+
 
     // 유효성 에러 - image
     @ExceptionHandler(CustomImageValidationException.class)

@@ -1,7 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
-<%@ include file="../layout/header.jsp"%>
+<div th:replace="layout/header :: head('upload02')"></div>
+<body>
+<div th:replace="layout/header :: body_header"></div>
 
 <!--프로필 섹션-->
 <section class="profile">
@@ -26,7 +28,7 @@
 		<!--유저정보 및 사진등록 구독하기-->
 		<div class="profile-right">
 			<div class="name-group">
-				<h2>TherePrograming</h2>
+				<h2 th:text="${user.name}">gg</h2>
 
 				<button class="cta" onclick="location.href='/image/upload'">사진등록</button>
 				<button class="cta" onclick="toggleSubscribe(this)">구독하기</button>
@@ -44,8 +46,8 @@
 				</ul>
 			</div>
 			<div class="state">
-				<h4>자기 소개입니다.</h4>
-				<h4>https://github.com/codingspecialist</h4>
+				<h4 th:text="${#strings.equals(user.bio, '')} ?  '자기 소개입니02다' : ${user.bio}"></h4>
+				<h4 th:text="${#strings.equals(user.website, '')} ?  '웹 사이트 주소' : ${user.website}"></h4>
 			</div>
 		</div>
 		<!--유저정보 및 사진등록 구독하기-->
@@ -101,7 +103,7 @@
 <!--로그아웃, 회원정보변경 모달-->
 <div class="modal-info" onclick="modalInfo()">
 	<div class="modal">
-		<button onclick="location.href='/user/1/update'">회원정보 변경</button>
+		<button th:onclick="|location.href='/user/${user.id}/update'|">회원정보 변경</button>
 		<button onclick="location.href='/logout'">로그아웃</button>
 		<button onclick="closePopup('.modal-info')">취소</button>
 	</div>
@@ -162,4 +164,6 @@
 
 <script src="/js/profile.js"></script>
 
-<%@ include file="../layout/footer.jsp"%>
+<div th:replace="layout/footer :: footer"></div>
+</body>
+</html>

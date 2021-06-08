@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Builder
-@ToString
+@ToString(exclude = {"images"})
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -49,7 +49,18 @@ public class User extends BaseTimeEntity {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Image> images;
 
-    
+
+
+    public void updateUser(User user){
+
+        this.name = user.getName();
+        this.website = user.getWebsite();
+        this.bio = user.getBio();
+        this.email = user.getEmail();
+        this.phone = user.getPhone();
+        this.gender = user.getGender();
+
+    }
     
 
     // 비밀번호 암호화

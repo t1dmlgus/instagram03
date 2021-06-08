@@ -20,8 +20,14 @@ function join(evt) {
         alert(res.message);
         location.href=`/`;
     }).fail(error=>{
-        console.log(error);
-        //alert(error);
+        console.log(error.responseJSON);
+
+        if(error.responseJSON.data != null){
+            alert(JSON.stringify(error.responseJSON.data));
+        }else{
+            alert(error.responseJSON.message);
+        }
+
     });
 
 }

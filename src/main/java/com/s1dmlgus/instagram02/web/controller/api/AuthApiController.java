@@ -50,7 +50,7 @@ public class AuthApiController {
             log.info(joinDto.toString());
 
             // 회원가입
-            User saveUser = userService.Join(joinDto);
+            User saveUser = userService.join(joinDto);
 
 
         return new ResponseEntity<>(new ResponseDto<>("회원가입되었습니다:)",""), HttpStatus.OK);
