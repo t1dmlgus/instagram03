@@ -12,8 +12,9 @@ import javax.validation.constraints.Size;
 public class UserUpdateDto {
 
     @NotBlank
-    @Size(max = 20)
-    private String name;
+    @Size(max = 20, message = "이름은 20자 내 가능합니02다.")
+    private String name;                // 필수
+
 
     private String website;
     private String bio;
