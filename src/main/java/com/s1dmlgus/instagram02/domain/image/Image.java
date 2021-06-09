@@ -23,9 +23,10 @@ public class Image extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // 추가기능
-    // 이미지 좋아요
-    // 댓글
+    // 추후 필요기능
+    // + 이미지 좋아요
+    // + 댓글
+    // + 추가기능
 
     private String caption;
     private String postImageUrl;        // 사진을 전송받아서 그 사진을 서버의 특정 폴더에 저장 -> DB에 저장된 경로를 삽입, INSERT
@@ -33,5 +34,8 @@ public class Image extends BaseTimeEntity {
     @JoinColumn(name = "userId")
     @ManyToOne
     private User user;                  // 누가 업로드 했는지
+
+
+
 
 }

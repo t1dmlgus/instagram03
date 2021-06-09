@@ -36,6 +36,8 @@ public class UserService {
     // 회원 프로필
     @Transactional
     public User profile(Long userId) {
+
+        // 해당 유저에 대한 image를 다 가져온다.
         //select * from image where userId = :userId;
 
         User userEntity = existUser(userId, "[프로필] 해당 프로필 페이지는 없슈");
@@ -90,7 +92,6 @@ public class UserService {
 
         // 세션
         principalDetails.setUser(user);
-
 
         return new ResponseDto<>("회원수정완료!", user);
     }

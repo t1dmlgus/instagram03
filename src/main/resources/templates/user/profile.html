@@ -67,26 +67,8 @@
 				<!--아이템들-->
 
 
-				<div class="img-box">
-					<a href=""> <img src="/images/home.jpg" />
-					</a>
-					<div class="comment">
-						<a href="#" class=""> <i class="fas fa-heart"></i><span>0</span>
-						</a>
-					</div>
-				</div>
-
-				<div class="img-box">
-					<a href=""> <img src="/images/home.jpg" />
-					</a>
-					<div class="comment">
-						<a href="#" class=""> <i class="fas fa-heart"></i><span>0</span>
-						</a>
-					</div>
-				</div>
-
-				<div class="img-box">
-					<a href=""> <img src="/images/home.jpg" />
+				<div class="img-box" th:each="image : ${user.images}" th:reversed>
+					<a href=""> <img th:src="|/upload/${image.postImageUrl}|" />
 					</a>
 					<div class="comment">
 						<a href="#" class=""> <i class="fas fa-heart"></i><span>0</span>

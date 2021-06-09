@@ -44,10 +44,13 @@ public class ImageService {
 
             Files.write(path, imageUploadDto.getFile().getBytes());
         } catch (Exception e) {
+            e.printStackTrace();        // 에러 메세지의 발생 근원지를 찾아서 단계별로 에러를 출력한다.
+
 
         }
 
-
+        
+        // image 테이블에 저장
         Image image = imageUploadDto.toEntity(filename, principalDetails.getUser());
         Image imageEntity = imageRespository.save(image);
 
