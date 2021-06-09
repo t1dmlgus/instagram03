@@ -23,8 +23,6 @@ public class GlobalExceptionHandler {
      *  2. Ajax      -> ResponseDto
      *
      *
-     * @param e
-     * @return
      */
 
     // 유효성 에러
@@ -44,7 +42,7 @@ public class GlobalExceptionHandler {
 
     }
 
-
+    // 예외 메시지 - alert
     @ExceptionHandler(CustomException.class)
     public String customException(CustomException e) {
 
