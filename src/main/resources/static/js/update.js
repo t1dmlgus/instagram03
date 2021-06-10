@@ -18,7 +18,7 @@ function update(userId, evt) {
         console.log(res);
         alert(res.message)
         console.log("update 성공");
-        //location.href=`/user/${userId}`;
+        location.href=`/user/${userId}`;
     }).fail(error=>{
         console.log(error.responseJSON);
         alert(JSON.stringify(error.responseJSON.data));

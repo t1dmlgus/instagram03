@@ -22,7 +22,9 @@ public class SubscribeService {
 
 
             try {
-                subscribeRepository.mSubscribe(fromUserId, toUserId);
+                if (!fromUserId.equals(toUserId)) {
+                    subscribeRepository.mSubscribe(fromUserId, toUserId);
+                }
 
             }catch (Exception e){
 

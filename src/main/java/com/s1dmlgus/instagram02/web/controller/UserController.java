@@ -2,8 +2,8 @@ package com.s1dmlgus.instagram02.web.controller;
 
 
 import com.s1dmlgus.instagram02.config.auth.PrincipalDetails;
-import com.s1dmlgus.instagram02.domain.user.User;
 import com.s1dmlgus.instagram02.service.UserService;
+import com.s1dmlgus.instagram02.web.dto.user.UserProfileDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -18,12 +18,15 @@ public class UserController {
     private final UserService userService;
 
     // 프로필
-    @GetMapping("/user/{id}")
-    public String profile(@PathVariable Long id, Model model) {
+    @GetMapping("/user/{pageUserId}")
+    public String profile(UserProfileDto userProfileDto, @AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
 
 
-        User userEntity = userService.profile(id);
-        model.addAttribute("user", userEntity);
+        // 프로필 뷰 렌더링 서비스
+        UserProfileDto profile = userService.profile(userProfileDto, principalDetails.getUser().getId());
+
+        model.addAttribute("dto", profile);
+        model.addAttribute("principal" ,principalDetails);
 
         return "user/profile";
 
