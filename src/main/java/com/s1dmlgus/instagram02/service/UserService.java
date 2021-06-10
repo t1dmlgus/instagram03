@@ -82,7 +82,7 @@ public class UserService {
      * @return
      */
     @Transactional
-    public ResponseDto<?> updateUser(Long id, UserUpdateDto userUpdateDto, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+    public ResponseDto<?> updateUser(Long id, UserUpdateDto userUpdateDto) {
 
         // 영속화
         User user = existUser(id, "해당 아이디가 없습니다.");
@@ -90,10 +90,7 @@ public class UserService {
         // 업데이트 로직, DTO -> Entity
         user.updateUser(userUpdateDto.toEntity());
 
-        // 세션
-        principalDetails.setUser(user);
-
-        return new ResponseDto<>("회원수정완료!", user);
+        return new ResponseDto<>("회원수정완02료!", user);
     }
 
 

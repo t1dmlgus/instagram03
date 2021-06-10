@@ -1,6 +1,7 @@
 package com.s1dmlgus.instagram02.domain.user;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.s1dmlgus.instagram02.domain.BaseTimeEntity;
 import com.s1dmlgus.instagram02.domain.image.Image;
 import lombok.*;
@@ -46,6 +47,7 @@ public class User extends BaseTimeEntity {
      *  4. Eager = User를 select 할 때, 해당 User id로 등록된 image들을 전부 join 해서 가져와!
      */
 
+    @JsonIgnoreProperties({"user"})
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Image> images;
 

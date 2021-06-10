@@ -15,11 +15,15 @@ function update(userId, evt) {
         dataType:'json'
     }).done(res=>{
 
-        console.log(res.data);
+        console.log(res);
+        alert(res.message)
         console.log("update 성공");
         //location.href=`/user/${userId}`;
     }).fail(error=>{
         console.log(error.responseJSON);
+        alert(JSON.stringify(error.responseJSON.data));
+        //console.log(error);
+
     });
 
 }

@@ -2,6 +2,7 @@ package com.s1dmlgus.instagram02.web.controller.api;
 
 
 import com.s1dmlgus.instagram02.config.auth.PrincipalDetails;
+import com.s1dmlgus.instagram02.domain.user.User;
 import com.s1dmlgus.instagram02.exception.CustomValidationException;
 import com.s1dmlgus.instagram02.service.UserService;
 import com.s1dmlgus.instagram02.web.dto.ResponseDto;
@@ -53,11 +54,26 @@ public class UserApiController {
         }
 
 
-
         // 회원수정 로직
-        ResponseDto responseDto = userService.updateUser(id, userUpdateDto, principalDetails);
+        ResponseDto<?> responseDto = userService.updateUser(id, userUpdateDto);
 
-        return new ResponseEntity<>(new ResponseDto<>("회원수정 완료!", responseDto), HttpStatus.OK);
+        // 세션 반영
+        principalDetails.setUser((User) responseDto.getData());
+
+        System.out.println("22222222" );
+
+        System.out.println("responseDto = " + responseDto);
+
+        System.out.println("33222222" );
+
+        ResponseEntity<? extends ResponseDto<?>> ss = new ResponseEntity<>(responseDto, HttpStatus.OK);
+
+        System.out.println("ss = " + ss);
+
+        System.out.println("44222222" );
+
+        return ss;
+        // MessageConverter -> 응답시에 UserEntity의 모든 getter 함수가 호출되고, JSON으로 파싱하여 응답한다.
     }
 
 }
