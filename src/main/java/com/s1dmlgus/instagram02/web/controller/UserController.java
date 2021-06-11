@@ -17,6 +17,8 @@ public class UserController {
 
     private final UserService userService;
 
+
+
     // 프로필
     @GetMapping("/user/{pageUserId}")
     public String profile(UserProfileDto userProfileDto, @AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
@@ -26,7 +28,7 @@ public class UserController {
         UserProfileDto profile = userService.profile(userProfileDto, principalDetails.getUser().getId());
 
         model.addAttribute("dto", profile);
-        model.addAttribute("principal" ,principalDetails);
+        model.addAttribute("principal", principalDetails);
 
         return "user/profile";
 
@@ -40,7 +42,7 @@ public class UserController {
         userService.showUpdateUser(id, principalDetails.getUser());
 
 
-        model.addAttribute("principal", principalDetails.getUser());
+        model.addAttribute("principal", principalDetails);
         return "user/update";
     }
 

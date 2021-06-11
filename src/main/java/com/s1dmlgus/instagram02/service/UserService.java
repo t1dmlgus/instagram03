@@ -15,8 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 
 @RequiredArgsConstructor
 @Service
@@ -55,20 +55,8 @@ public class UserService {
 
     }
 
-    // 구독자 수 조회
-    private int getSubscribeCount(UserProfileDto userProfileDto) {
-        int subscribeCount = subscribeRepository.mSubscribeCount(userProfileDto.getPageUserId());
-        return subscribeCount;
-    }
-
-    // 구독 확인
-    private boolean isSubscribeState(UserProfileDto userProfileDto, Long sessionUserId) {
-        int state = subscribeRepository.mSubscribeState(sessionUserId, userProfileDto.getPageUserId());
-        boolean subscribeState = state == 1;
-        return subscribeState;
-    }
-
     // 회원가입
+
     @Transactional
     public User join(JoinDto joinDto) {
 
@@ -89,7 +77,6 @@ public class UserService {
 
         throw new CustomValidationException("[회원가입] 현재 사용중인 Id 입니다.");
     }
-
 
     /**
      * 회원수정
@@ -115,6 +102,7 @@ public class UserService {
 
 
     // 업데이트 화면
+
     @Transactional
     public void showUpdateUser(Long id, User sessionUser) {
 
@@ -123,7 +111,23 @@ public class UserService {
 
     }
 
+
+
+    // 구독자 수 조회
+    private int getSubscribeCount(UserProfileDto userProfileDto) {
+        int subscribeCount = subscribeRepository.mSubscribeCount(userProfileDto.getPageUserId());
+        return subscribeCount;
+    }
+
+    // 구독 확인
+    private boolean isSubscribeState(UserProfileDto userProfileDto, Long sessionUserId) {
+        int state = subscribeRepository.mSubscribeState(sessionUserId, userProfileDto.getPageUserId());
+        boolean subscribeState = state == 1;
+        return subscribeState;
+    }
+
     // 유저 일치확인
+
     private void accorUser(User sessionUser, User user1) {
         boolean equals = user1.getId().equals(sessionUser.getId());
 
@@ -132,8 +136,8 @@ public class UserService {
         }
     }
 
-
     // 유저 유무확인
+
     private User existUser(Long id, String s) {
 
         return userRepository.findById(id).orElseThrow(() -> {
@@ -141,7 +145,6 @@ public class UserService {
 
         });
     }
-
 
 
     // 유저 중복확인

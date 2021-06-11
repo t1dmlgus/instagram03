@@ -3,10 +3,17 @@ package com.s1dmlgus.instagram02.service;
 
 import com.s1dmlgus.instagram02.domain.subscribe.SubscribeRepository;
 import com.s1dmlgus.instagram02.exception.CustomException;
+import com.s1dmlgus.instagram02.web.dto.ResponseDto;
+import com.s1dmlgus.instagram02.web.dto.subscribe.SubscribeDto;
 import lombok.RequiredArgsConstructor;
+import org.qlrm.mapper.JpaResultMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import java.util.List;
+
 
 @RequiredArgsConstructor
 @Service
@@ -14,6 +21,47 @@ public class SubscribeService {
 
 
     private final SubscribeRepository subscribeRepository;
+    private final EntityManager em;
+
+
+    // 해당 프로필유저의 구독 리스트 서비스
+    @Transactional(readOnly = true)
+    public ResponseDto<?> subscribeList(Long principalId, Long pageUserId) {
+
+
+        System.out.println("principalId222 = " + principalId);
+        System.out.println("pageUserId222 = " + pageUserId);
+
+        // 쿼리 준비
+        StringBuffer sb = new StringBuffer();
+        sb.append("SELECT u.id, u.username, u.profileImageUrl, ");
+        sb.append("if((SELECT true FROM subscribe WHERE fromUserId = ? AND toUserId = u.id), 1, 0) subscribeState, ");
+        sb.append("if((?=u.id), 1, 0) equalUserState ");
+        sb.append("FROM user u INNER JOIN subscribe s ");
+        sb.append("ON u.id = s.toUserId ");
+        sb.append("WHERE s.fromUserId = ? ");
+
+
+        // 1. 물음표 principalId
+        // 2. 물음표 principalId
+        // 3. 물음표 pageUserId
+
+        // 쿼리 완성
+        Query nativeQuery = em.createNativeQuery(sb.toString())
+                .setParameter(1, principalId)
+                .setParameter(2, principalId)
+                .setParameter(3, pageUserId);
+
+
+        // 쿼리 실행(qlrm 라이프러리 -> dto에 DB결과를 매핑하기 위해서)
+        JpaResultMapper result = new JpaResultMapper();
+        List<SubscribeDto> subscribeDtos = result.list(nativeQuery, SubscribeDto.class);
+
+
+        return new ResponseDto<>("구독자 정보 리스트 가져오기 성공!", subscribeDtos);
+
+    }
+
 
 
     // 구독하기
@@ -42,5 +90,6 @@ public class SubscribeService {
 
 
     }
+
 
 }

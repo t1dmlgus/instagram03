@@ -8,6 +8,7 @@ import com.s1dmlgus.instagram02.web.dto.image.ImageUploadDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -21,7 +22,10 @@ public class ImageController {
 
     // 이미지 업로드 페이지 호출
     @GetMapping("/image/upload")
-    public String ImageUpload(){
+    public String ImageUpload(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails){
+
+
+        model.addAttribute("principal", principalDetails);
 
         return "image/upload";
     }

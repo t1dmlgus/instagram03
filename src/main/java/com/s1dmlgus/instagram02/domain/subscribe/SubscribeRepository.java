@@ -10,17 +10,20 @@ public interface SubscribeRepository extends JpaRepository<Subscribe, Long> {
 
     // 네이티브 쿼리
 
+    // 구독하기
     @Modifying
     @Query(value = "INSERT INTO subscribe(fromUserId, toUserId, createdDate) VALUES(:fromUserId, :toUserId, now())", nativeQuery = true)
     void mSubscribe(@Param("fromUserId") Long fromUserId, @Param("toUserId") Long toUserId);
 
 
-
+    // 구독취소
     @Modifying
     @Query(value = "DELETE FROM subscribe WHERE fromUserId = :fromUserId AND toUserId = :toUserId", nativeQuery = true)
     void mUnSubscribe(@Param("fromUserId") Long fromUserId, @Param("toUserId") Long toUserId);
 
 
+    
+    
     // 구독자 수
     // SELECT COUNT(*) FROM subscribe WHERE fromUserId = 3;
 

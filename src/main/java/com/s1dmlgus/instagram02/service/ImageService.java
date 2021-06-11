@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.jni.File;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.nio.file.Files;
@@ -27,6 +28,7 @@ public class ImageService {
     private String uploadFolder;
 
 
+    @Transactional
     public void imageUpload(ImageUploadDto imageUploadDto, PrincipalDetails principalDetails) {
 
         UUID uuid = UUID.randomUUID();// 네트워크 상에서 고유성이 보장되는 id를 만들기 위한 표준 규약
