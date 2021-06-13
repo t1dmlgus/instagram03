@@ -3,10 +3,7 @@ package com.s1dmlgus.instagram02.domain.subscribe;
 
 import com.s1dmlgus.instagram02.domain.BaseTimeEntity;
 import com.s1dmlgus.instagram02.domain.user.User;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -19,6 +16,7 @@ import javax.persistence.*;
                 )
         }
 )
+@ToString
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
