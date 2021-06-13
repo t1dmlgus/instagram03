@@ -32,22 +32,21 @@ public class SubscribeService {
         System.out.println("principalId222 = " + principalId);
         System.out.println("pageUserId222 = " + pageUserId);
 
-        // 쿼리 준비
-        StringBuffer sb = new StringBuffer();
-        sb.append("SELECT u.id, u.username, u.profileImageUrl, ");
-        sb.append("if((SELECT true FROM subscribe WHERE fromUserId = ? AND toUserId = u.id), 1, 0) subscribeState, ");
-        sb.append("if((?=u.id), 1, 0) equalUserState ");
-        sb.append("FROM user u INNER JOIN subscribe s ");
-        sb.append("ON u.id = s.toUserId ");
-        sb.append("WHERE s.fromUserId = ? ");
 
+        // 쿼리 준비
+        String sb = "SELECT u.id, u.username, u.profileImageUrl, " +
+                "if((SELECT true FROM subscribe WHERE fromUserId = ? AND toUserId = u.id), 1, 0) subscribeState, " +
+                "if((?=u.id), 1, 0) equalUserState " +
+                "FROM user u INNER JOIN subscribe s " +
+                "ON u.id = s.toUserId " +
+                "WHERE s.fromUserId = ? ";
 
         // 1. 물음표 principalId
         // 2. 물음표 principalId
         // 3. 물음표 pageUserId
 
         // 쿼리 완성
-        Query nativeQuery = em.createNativeQuery(sb.toString())
+        Query nativeQuery = em.createNativeQuery(sb)
                 .setParameter(1, principalId)
                 .setParameter(2, principalId)
                 .setParameter(3, pageUserId);
@@ -70,9 +69,8 @@ public class SubscribeService {
 
 
             try {
-                if (!fromUserId.equals(toUserId)) {
-                    subscribeRepository.mSubscribe(fromUserId, toUserId);
-                }
+
+                subscribeRepository.mSubscribe(fromUserId, toUserId);
 
             }catch (Exception e){
 

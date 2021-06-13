@@ -37,7 +37,7 @@ function toggleSubscribe(toUserId, obj) {
                 dataType:"json"
 
             }).done(res=>{
-                $(obj).text("구독취02소");
+                $(obj).text("구독취소");
                 $(obj).toggleClass("blue");
 
             }).fail(error=>{

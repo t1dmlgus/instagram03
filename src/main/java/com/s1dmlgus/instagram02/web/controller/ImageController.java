@@ -20,7 +20,22 @@ public class ImageController {
     private final ImageService imageService;
 
 
-    // 이미지 업로드 페이지 호출
+    // 이미지 스토리 페이지
+    @GetMapping("/image/story")
+    public String imageStory(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
+
+
+
+        model.addAttribute("principal", principalDetails);
+
+        return "image/story";
+    }
+
+
+
+
+
+    // 이미지 업로드 페이지
     @GetMapping("/image/upload")
     public String ImageUpload(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails){
 

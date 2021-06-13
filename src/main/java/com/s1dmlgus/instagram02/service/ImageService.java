@@ -4,10 +4,14 @@ package com.s1dmlgus.instagram02.service;
 import com.s1dmlgus.instagram02.config.auth.PrincipalDetails;
 import com.s1dmlgus.instagram02.domain.image.Image;
 import com.s1dmlgus.instagram02.domain.image.ImageRespository;
+import com.s1dmlgus.instagram02.web.dto.ResponseDto;
 import com.s1dmlgus.instagram02.web.dto.image.ImageUploadDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.apache.tomcat.jni.File;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,19 +19,39 @@ import org.springframework.transaction.annotation.Transactional;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.UUID;
 
 
+@Log4j2
 @RequiredArgsConstructor
 @Service
 public class ImageService {
 
     private final ImageRespository imageRespository;
 
+
+
+    @Transactional(readOnly = true)
+    public ResponseDto imageStory(Long principalId, Pageable pageable){
+
+        Page<Image> images = imageRespository.mStory(principalId, pageable);
+
+        return new ResponseDto("이미지 스토리 가져오기",images);
+    }
+
+
+
+
+
+
+
+
     @Value("${file.path}")
     private String uploadFolder;
 
 
+    // 이미지 업로드
     @Transactional
     public void imageUpload(ImageUploadDto imageUploadDto, PrincipalDetails principalDetails) {
 
