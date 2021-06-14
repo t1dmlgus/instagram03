@@ -1,6 +1,7 @@
 package com.s1dmlgus.instagram02.domain.likes;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.s1dmlgus.instagram02.domain.BaseTimeEntity;
 import com.s1dmlgus.instagram02.domain.image.Image;
 import com.s1dmlgus.instagram02.domain.user.User;
@@ -35,6 +36,7 @@ public class Likes extends BaseTimeEntity {     // N
     private Image image;     // 1
 
 
+    @JsonIgnoreProperties({"images"})
     @JoinColumn(name = "userId")
     @ManyToOne
     private User user;       // 1

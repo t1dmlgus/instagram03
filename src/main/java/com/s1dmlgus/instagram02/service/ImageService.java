@@ -31,11 +31,29 @@ public class ImageService {
     private final ImageRespository imageRespository;
 
 
-
+    // 이미지 스토리 가져오기
     @Transactional(readOnly = true)
     public ResponseDto imageStory(Long principalId, Pageable pageable){
 
         Page<Image> images = imageRespository.mStory(principalId, pageable);
+
+
+        // 좋아요 가져오기
+        images.forEach(image->{
+            // 좋아요 개수
+            log.info("좋아요 개수");
+            image.setLikeCount(image.getLikes().size());
+
+            image.getLikes().forEach(likes -> {
+
+                // 해당 이미지에 좋아요 한 사람들을 찾아서 현재 로그인한 사람이 좋아요 한 것인지 비교
+                if (likes.getUser().getId().equals(principalId)) {
+                    image.setLikeState(true);
+                }
+            });
+
+        });
+
 
         return new ResponseDto("이미지 스토리 가져오기",images);
     }
