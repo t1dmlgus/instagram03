@@ -31,6 +31,8 @@ public class Likes extends BaseTimeEntity {     // N
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
+    @JsonIgnoreProperties({"images"})
     @JoinColumn(name = "imageId")
     @ManyToOne
     private Image image;     // 1

@@ -5,6 +5,7 @@ import com.s1dmlgus.instagram02.config.auth.PrincipalDetails;
 import com.s1dmlgus.instagram02.domain.image.Image;
 import com.s1dmlgus.instagram02.domain.image.ImageRespository;
 import com.s1dmlgus.instagram02.web.dto.ResponseDto;
+import com.s1dmlgus.instagram02.web.dto.image.ImageDto;
 import com.s1dmlgus.instagram02.web.dto.image.ImageUploadDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -101,6 +102,16 @@ public class ImageService {
         System.out.println("imageEntity = " + imageEntity);
 
 
+    }
+
+
+    // 인기사진(랭크)
+    @Transactional(readOnly = true)
+    public ImageDto rankImage() {
+
+        List<Image> images = imageRespository.mPopular();
+
+        return new ImageDto(images);
     }
 
 }

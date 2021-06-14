@@ -1,9 +1,12 @@
 package com.s1dmlgus.instagram02.web.controller;
 
 import com.s1dmlgus.instagram02.config.auth.PrincipalDetails;
+import com.s1dmlgus.instagram02.domain.image.Image;
 import com.s1dmlgus.instagram02.exception.CustomImageValidationException;
 import com.s1dmlgus.instagram02.exception.CustomValidationException;
 import com.s1dmlgus.instagram02.service.ImageService;
+import com.s1dmlgus.instagram02.web.dto.ResponseDto;
+import com.s1dmlgus.instagram02.web.dto.image.ImageDto;
 import com.s1dmlgus.instagram02.web.dto.image.ImageUploadDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -11,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.List;
 
 
 @RequiredArgsConstructor
@@ -63,6 +68,24 @@ public class ImageController {
 
         return "redirect:/user/" + principalDetails.getUser().getId();
 
+    }
+
+
+    
+    // 인기(랭크) 페이지
+    @GetMapping("/image/popular")
+    public String popular(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails){
+
+
+        ImageDto imageDto = imageService.rankImage();
+//
+//
+        model.addAttribute("principal", principalDetails);
+        model.addAttribute("images", imageDto.getImage());
+        //model.addAttribute("images", images.get(0).getPostImageUrl());
+
+
+        return "image/popular";
     }
 
 
