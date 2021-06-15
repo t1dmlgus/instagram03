@@ -56,7 +56,7 @@ public class ImageService {
         });
 
 
-        return new ResponseDto("이미지 스토리 가져오기",images);
+        return new ResponseDto("이미지 스토리 가져오기!",images);
     }
 
 

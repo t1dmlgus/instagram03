@@ -29,9 +29,8 @@ public class ImageController {
     @GetMapping("/image/story")
     public String imageStory(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
 
-
-
         model.addAttribute("principal", principalDetails);
+
 
         return "image/story";
     }
