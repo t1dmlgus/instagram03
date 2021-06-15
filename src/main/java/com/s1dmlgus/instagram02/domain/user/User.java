@@ -52,7 +52,7 @@ public class User extends BaseTimeEntity {
     private List<Image> images;
 
 
-
+    // 유저 업데이트
     public void updateUser(User user){
 
         this.name = user.getName();
@@ -73,5 +73,11 @@ public class User extends BaseTimeEntity {
     // 권한부여
     public void setRole(String role) {
         this.role = role;
+    }
+
+    
+    // 프로필 이미지 변경
+    public void setProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
     }
 }

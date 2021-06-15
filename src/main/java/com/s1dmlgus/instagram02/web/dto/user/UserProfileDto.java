@@ -37,5 +37,8 @@ public class UserProfileDto {
         setSubscribeCount(subscribeCount);
     }
 
-
+    // 프로필 이미지 수정 생성자
+    public UserProfileDto(User user) {
+        this.user = user;
+    }
 }

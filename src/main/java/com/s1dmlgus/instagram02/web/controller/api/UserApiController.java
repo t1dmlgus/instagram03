@@ -8,6 +8,7 @@ import com.s1dmlgus.instagram02.service.SubscribeService;
 import com.s1dmlgus.instagram02.service.UserService;
 import com.s1dmlgus.instagram02.web.dto.ResponseDto;
 import com.s1dmlgus.instagram02.web.dto.subscribe.SubscribeDto;
+import com.s1dmlgus.instagram02.web.dto.user.UserProfileDto;
 import com.s1dmlgus.instagram02.web.dto.user.UserUpdateDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -33,7 +35,23 @@ public class UserApiController {
     private final UserService userService;
     private final SubscribeService subscribeService;
 
-    // 해당 프로필유저의 구독 리스트 가져오기
+
+    @PutMapping("/user/{principalId}/profileImageUrl")
+    public ResponseEntity<?> profileImageUrlUpdate(@PathVariable Long principalId, MultipartFile profileImageFile, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+
+        // 프로필 이미지 수정
+        UserProfileDto userProfileDto = userService.updateProfileImage(principalId, profileImageFile);
+        // 세션 업데이트
+        principalDetails.setUser(userProfileDto.getUser());
+
+        return new ResponseEntity<>("프로필 이미지 변경 완02료!", HttpStatus.OK);
+    }
+
+
+
+
+
+    // 프로필유저의 구독 리스트 가져오기
     @GetMapping("/user/{pageUserId}/subscribe")
     public ResponseEntity<?> subscribeList(@PathVariable Long pageUserId, @AuthenticationPrincipal PrincipalDetails principalDetails) {
 
@@ -44,10 +62,6 @@ public class UserApiController {
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
 
     }
-
-
-
-
 
 
     // 회원수정

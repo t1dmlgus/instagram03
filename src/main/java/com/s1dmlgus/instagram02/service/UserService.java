@@ -11,11 +11,18 @@ import com.s1dmlgus.instagram02.web.dto.auth.JoinDto;
 import com.s1dmlgus.instagram02.web.dto.user.UserProfileDto;
 import com.s1dmlgus.instagram02.web.dto.user.UserUpdateDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.UUID;
 
 
 @RequiredArgsConstructor
@@ -45,6 +52,10 @@ public class UserService {
         System.out.println("subscribeCount = " + subscribeCount);
 
 
+        // 좋아요 수
+        countLike(userEntity);
+
+
         // 프로필 dto 세팅
         userProfileDto.setProfile(userProfileDto, sessionUserId, userEntity, subscribeState, subscribeCount);
         
@@ -55,8 +66,53 @@ public class UserService {
 
     }
 
-    // 회원가입
+    private void countLike(User userEntity) {
+        userEntity.getImages().forEach(i->{
+            i.setLikeCount(i.getLikes().size());
+        });
+    }
 
+
+    @Value("${file.path}")
+    private String uploadFolder;
+
+
+    // 프로필 사진 변경
+    @Transactional
+    public UserProfileDto updateProfileImage(Long principalId, MultipartFile profileImageFile) {
+
+        UUID uuid = UUID.randomUUID();// 네트워크 상에서 고유성이 보장되는 id를 만들기 위한 표준 규약
+        String filename = uuid +"_"+ profileImageFile.getOriginalFilename();
+        System.out.println("filename = " + filename);
+
+
+        // 저장경로
+        Path path = Paths.get(uploadFolder + filename);
+        System.out.println("path = " + path);
+
+
+        // 통신, I/O -> 예외발생 할 수 있다.
+        try {
+
+            Files.write(path, profileImageFile.getBytes());
+        } catch (Exception e) {
+            e.printStackTrace();        // 에러 메세지의 발생 근원지를 찾아서 단계별로 에러를 출력한다.
+
+        }
+
+        // 유저 유무확인
+        User userEntity = existUser(principalId, "유저를 찾을 수 없습니다.");
+        // 프로필 이미지 설정
+        userEntity.setProfileImageUrl(filename);
+
+        return new UserProfileDto(userEntity);
+    }
+
+
+
+
+
+    // 회원가입
     @Transactional
     public User join(JoinDto joinDto) {
 
@@ -137,7 +193,6 @@ public class UserService {
     }
 
     // 유저 유무확인
-
     private User existUser(Long id, String s) {
 
         return userRepository.findById(id).orElseThrow(() -> {
