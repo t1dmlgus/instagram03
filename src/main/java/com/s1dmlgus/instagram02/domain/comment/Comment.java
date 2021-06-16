@@ -35,7 +35,7 @@ public class Comment extends BaseTimeEntity {   // N
 
 
     @JoinColumn(name = "imageId")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne()
     private Image image;    // 1                                    // 이미지정보
 
 

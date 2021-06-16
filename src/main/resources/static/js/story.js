@@ -204,14 +204,14 @@ function addComment(imageId) {
 	}
 
 //	console.log(data);
-//	console.log(JSON.stringify(data));
+	console.log(JSON.stringify(data));
 //	return;
 
 
-	if (data.content === "") {
-		alert("댓글을 작성해주세요!");
-		return;
-	}
+//	if (data.content === "") {
+//		alert("댓글을 작성해주세요!");
+//		return;
+//	}
 
 
     $.ajax({
@@ -243,7 +243,8 @@ function addComment(imageId) {
 
 
     }).fail(error=>{
-        console.log("댓글 오02류",error);
+        alert(error.responseJSON.data.content)
+        console.log(error.responseJSON.data.content);
     })
 
 
