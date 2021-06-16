@@ -70,20 +70,6 @@ public class UserApiController {
                                   @Valid UserUpdateDto userUpdateDto, BindingResult bindingResult,
                                   @AuthenticationPrincipal PrincipalDetails principalDetails) {
 
-        if (bindingResult.hasErrors()) {
-
-            Map<String, String> errorMap = new HashMap<>();
-
-
-            for (FieldError fieldError : bindingResult.getFieldErrors()) {
-
-                errorMap.put(fieldError.getField(), fieldError.getDefaultMessage());
-                System.out.println(" ======================== ");
-                System.out.println(fieldError.getField() +" : " + fieldError.getDefaultMessage());
-                System.out.println(" ======================== ");
-            }
-            throw new CustomValidationException("유효성 검사 실02패", errorMap);
-        }
 
 
         // 회원수정 로직

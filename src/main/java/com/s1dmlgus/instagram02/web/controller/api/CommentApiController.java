@@ -30,25 +30,6 @@ public class CommentApiController {
     public ResponseEntity<?> saveComment(@Valid @RequestBody CommentReqDto commentReqDto, BindingResult bindingResult, @AuthenticationPrincipal PrincipalDetails principalDetails){
 
 
-        if (bindingResult.hasErrors()) {
-
-            HashMap<String, String> errorMap = new HashMap<>();
-
-            for (FieldError fieldError : bindingResult.getFieldErrors()) {
-                errorMap.put(fieldError.getField(), fieldError.getDefaultMessage());
-
-                System.out.println(" ================================= ");
-                System.out.println("fieldError.getDefaultMessage() = " + fieldError.getDefaultMessage());
-                System.out.println(" ================================= ");
-            }
-            throw new CustomValidationException("댓글 유효성 검사 실02패", errorMap);
-
-        }
-
-
-
-
-
 
         ResponseDto<Comment> commentResponseDto = commentService.writeComment(commentReqDto.getContent(), commentReqDto.getImageId(), principalDetails.getUser().getId());
 

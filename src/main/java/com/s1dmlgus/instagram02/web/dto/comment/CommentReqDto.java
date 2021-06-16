@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 @Data
 public class CommentReqDto {
 
-    @Size(max = 30)
+    @Size(max = 30, message = "댓글 길이는 30자 이내로 작성해주세욥")
     @NotBlank(message = "댓글을 입력해 주세요")                       // 빈값(""),빈공백문자열(" "), null 체크
     private String content;
     @NotNull                       // 빈값("") 체크

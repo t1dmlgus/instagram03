@@ -32,20 +32,6 @@ public class AuthApiController {
     @PostMapping("/auth/signup")
     public ResponseEntity<ResponseDto<?>> join(@Valid JoinDto joinDto, BindingResult bindingResult) {
 
-        if (bindingResult.hasErrors()) {
-            System.out.println(" 에러 감시~~~~ ");
-            HashMap<String, String> errorMap = new HashMap<>();
-
-            for (FieldError fieldError : bindingResult.getFieldErrors()) {
-                errorMap.put(fieldError.getField(), fieldError.getDefaultMessage());
-
-                System.out.println(" ================================= ");
-                System.out.println("fieldError.getDefaultMessage() = " + fieldError.getDefaultMessage());
-                System.out.println(" ================================= ");
-            }
-            throw new CustomValidationException("유효성 검사 실02패", errorMap);
-
-        }
 
             log.info(joinDto.toString());
 
