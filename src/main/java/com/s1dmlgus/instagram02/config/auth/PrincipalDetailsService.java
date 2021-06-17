@@ -18,7 +18,6 @@ public class PrincipalDetailsService implements UserDetailsService {
     /**
      * 1. 영속성 컨텍스트 에서 username 확인
      * 
-     * 
      * @param username
      * @return
      * @throws UsernameNotFoundException
@@ -26,14 +25,13 @@ public class PrincipalDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        System.out.println("username111 = " + username);
+
         User userEntity = userRepository.findByUsername(username);
 
         if (userEntity != null) {
-            System.out.println("userEntity222 = " + userEntity);
             return new PrincipalDetails(userEntity);
         }
-        System.out.println(" 더스티;번 ");
+
         return null;
 
     }
