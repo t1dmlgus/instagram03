@@ -1,9 +1,6 @@
 # 인스타그램 클론
 >인스타그램 서비스  
 
-[미술관 서비스](https://bit.ly/3dRzExf) <br>
-https://www.notion.so/9ed1f0f524614e42a810af741e6fd59f
-
 </br>
 
 ## 1. 제작 기간 & 참여 인원
@@ -29,12 +26,9 @@ https://www.notion.so/9ed1f0f524614e42a810af741e6fd59f
 
 </br>
 
-## 3. ERD 설계
-(http://naver.me/FwnGhGE3)
-
 </br>
 
-## 4. yml 설정
+## 3. yml 설정
 ```
 server:
   port: 8080
@@ -91,7 +85,7 @@ file:
 
 ```
 
-## 5. 기능
+## 4. 기능
   - Spring Data JPA와 REST API 형식의 CRUD 구현
   - Ajax 비동기 처리방식 좋아요, 댓글 기능 구현
   - 무한 스크롤 페이징처리
@@ -100,7 +94,7 @@ file:
   
 </br>
 
-## 6. 회고 / 느낀점
+## 5. 회고 / 느낀점
 > 메인 기능 구현과 상호 연관되어있는 공통기능(전,후처리)를 프록시 패턴, AOP를 이용하여 중복없이 효율적으로 코드를 짤수 있었으며, 
   ExceptionHandler를 통해, 전역적으로 발생하는 예외에 대하여 통합적으로 관리할 수 있었다.
   
