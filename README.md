@@ -28,7 +28,7 @@
 
 </br>
 
-## 3. yml 설정
+## 3. yml
 ```
 server:
   port: 8080
